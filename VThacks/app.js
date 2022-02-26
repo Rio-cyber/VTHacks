@@ -1,4 +1,5 @@
 const promisifiedRequest = async function(options) {
+    console.log(options.url);
     return await fetch(options.url, options);
 };
 
@@ -30,6 +31,12 @@ async function makeRequest(url, body) {
     };
     const res = await promisifiedRequest(options);
     const contentType = res.headers.get('content-type');
+    console.log(res);
+    if(res.status.toString().startsWith('4') || res.status.toString().startsWith('5')) {
+        const error = await res.text();
+        showToast(error);
+        throw Error(error)
+    }
     if (contentType.startsWith('application/json;'))  {
         return await res.json();
     } else {
@@ -38,20 +45,8 @@ async function makeRequest(url, body) {
 }
 
 async function register(username) {
+    console.log(username);
     return await makeRequest('saveUser', {username});
-    // var options = {
-    //     'method': 'POST',
-    //     'url': 'http://localhost:3000/saveUser',
-    //     'headers': {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         username,
-    //     })
-
-    // };
-    // const res = await promisifiedRequest(options);
-    // return JSON.parse(res.body);
 }
 
 
@@ -77,13 +72,21 @@ function convertPasswordToSets(password, n) {
 }
 
 async function fullRegisterFlow(username, password) {
-    const { g, n } = (await register(username));
-    // const {g, n} = {g: 51, n: 53};
-    const x = convertPasswordToSets(password, n);
-    const y = x.map((v) => powerMod(g, v, n));
-    console.log(y);
-    const res = await makeRequest('saveUserSecret', {username, y});
-    console.log('Registration Successful');
+    try {
+        const { g, n } = (await register(username));
+        console.log(g, n);
+        // // const {g, n} = {g: 51, n: 53};
+        const x = convertPasswordToSets(password, n);
+        const y = x.map((v) => powerMod(g, v, n));
+        console.log(y);
+        const res = await makeRequest('saveUserSecret', {username, y});
+        console.log('Registration Successful');
+        showToast('Registration Successful');
+    } catch (e) {
+        showToast(e.message);
+        // showToast("User already exists or something went wrong");
+    }
+
 }
 
 async function  login(username, password) {
@@ -111,8 +114,35 @@ async function  login(username, password) {
     }
     const verdict = await makeRequest('verifyLogin', {username, w});
     console.log(verdict);
+    showToast(verdict);
 }
 
 
+
+const loginButton = document.getElementById('login');
+const registerButton = document.getElementById('register');
+const passwordInput = document.getElementById('password');
+const usernameInput = document.getElementById('username');
+if(loginButton) {
+    loginButton.onclick = () => {
+        const { username, password } = fetchUserNamePassword();
+        login(username, password);
+    }
+}
+
+if(registerButton) {
+    registerButton.onclick = () => {
+        const { username, password } = fetchUserNamePassword();
+        fullRegisterFlow(username, password);
+    }
+}
+
+
+function fetchUserNamePassword() {
+    return {
+        username: usernameInput.value,
+        password: passwordInput.value,
+    }
+}
 
 //

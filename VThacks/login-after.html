@@ -18,11 +18,11 @@
                   <h1> Login</h1>  
                   <h2>or <a href='#'> Register</a></h2>
                   <div class='form'>
-                    <input type="text" value="username" />
+                    <input type="text" id="username" value="username" />
                   
-                    <input type='text' value='password' />
+                    <input type='text' id="password" value='password' />
                  
-                    <button type='submit' value='Register'  [disabled]="click" >Login</button>
+                    <button type='submit' value='login' id='login' >Login</button>
                   </div>
               </div>
               <div class="smartphone">
@@ -80,9 +80,10 @@
           
           
           
-
+              <div id="snackbar">Something went wrong</div> 
 </body>
 <script src="md5.js"></script>
+<script src="utils.js"></script>
 
 <script src="app.js"></script>
 </html>

@@ -14,12 +14,22 @@ app.get('/health', (req, res) => {
 })
 
 app.post('/saveUser', async (req, res) => {
-    const g = 51;
-    const n = 53;
-    const username = req.body.username;
-    console.log(username);
-    await database.saveUser(username, g, n);
-    res.send({g, n});
+    console.log("Save user");
+    try {
+        const g = 51;
+        const n = 53;
+        const username = req.body.username;
+        console.log(username);
+        try {
+            await database.saveUser(username, g, n);
+            res.send({g, n});
+        } catch(e) {
+            console.log("Something went wrong");
+            res.status(500).send(e.message);
+        }
+    } catch(e) {
+        res.status(500).send(e.message);
+    }
 });
 
 app.post('/saveUserSecret', async (req, res) => {
@@ -66,13 +76,13 @@ app.post("/verifyLogin", async (req, res) => {
             const v2 = powerMod(g, w[i], n);
             if(requestarray[i] === '0') {
                 const v1 = y[i] * c[i] % n;
-                if(v1 !== v2)  return res.send("Failed0").status(400);
+                if(v1 !== v2)  return res.status(400).send("Authentication Failed: Wrong Credentials");
             }
             else {
-                if(c[i] !== v2) return res.send("Failed1").status(400);
+                if(c[i] !== v2) return res.status(400).send("Authentication Failed: Wrong Credentials");
             }
         }
-        res.send("Successful").status(201);
+        res.send("Verficication Successful").status(201);
     } catch (e) {
         console.log(e);
         res.send("Internal server error");
@@ -80,6 +90,10 @@ app.post("/verifyLogin", async (req, res) => {
 
 });
 
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Something broke!');
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

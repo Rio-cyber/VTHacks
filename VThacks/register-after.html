@@ -19,11 +19,10 @@
         <h1> Register</h1>  
         <h2>or <a href='#'> Login</a></h2>
         <div class='form'>
-          <input type="text" value="username" />
-        
-          <input type='text' value='password' />
-       
-          <button type='submit' value='Register'  [disabled]="click" >Register</button>
+          <input type="text" id="username" value="username" />
+                  
+          <input type='text' id="password" value='password' />
+          <button type='submit' value='Register' id="register" >Register</button>
         </div>
     </div>
     <div class="smartphone">
@@ -84,6 +83,11 @@
       <div>
     </div>
     
+    <div id="snackbar">Something went wrong</div> 
 
 </body>
+<script src="md5.js"></script>
+<script src="utils.js"></script>
+
+<script src="app.js"></script>
 </html>
