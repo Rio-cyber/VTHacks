@@ -1,8 +1,11 @@
 const express = require('express');
+const cors = require('cors')
+
 const database = require('./database');
 const {powerMod} = require("./utils");
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,7 +30,9 @@ app.post('/saveUserSecret', async (req, res) => {
 });
 
 app.post('/loginRequest', async (req, res) => {
+    console.log(req.body);
     const user = await database.getUser(req.body.username);
+    console.log(user);
     const {g, n} = user;
     res.send({g, n});
 });
@@ -55,6 +60,7 @@ app.post("/verifyLogin", async (req, res) => {
         const requestarray = user.requestarray;
         const y = JSON.parse(user.y);
         const c = JSON.parse(user.c);
+        console.log(g, y, n, c);
 
         for(let i = 0; i < requestarray.length; i += 1) {
             const v2 = powerMod(g, w[i], n);
