@@ -22,7 +22,7 @@ const powerMod = (a, b, mod) => {
 async function makeRequest(url, body) {
     const options = {
         'method': 'POST',
-        'url': `http://localhost:3000/${url}`,
+        'url': `https://vthacks-342513.uc.r.appspot.com/${url}`,
         'headers': {
             'Content-Type': 'application/json'
         },
