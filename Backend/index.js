@@ -16,8 +16,11 @@ app.get('/health', (req, res) => {
 app.post('/saveUser', async (req, res) => {
     console.log("Save user");
     try {
+        // const g = getRandomInt(10000000)
+        // const n = generateRandomPrime();
         const g = 51;
         const n = 53;
+        // we are using g and n as small values for demonstration purposes
         const username = req.body.username;
         console.log(username);
         try {
