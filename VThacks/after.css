@@ -165,6 +165,10 @@ button:hover {
     padding-left: 2em;
 }
 
+[type='password'] {
+    padding-left: 2em;
+}
+
 [type='submit'] {
     color: white;
     background-color: #df830b;
