@@ -182,6 +182,13 @@ button:hover {
     outline: none;
 }
 
+[type='password']:focus {
+    border: 0;
+    border-bottom: 5px solid #df830b;
+    color: #df830b;
+    outline: none;
+}
+
 .smartphone {
     position: relative;
     width: 300px;
