@@ -34,6 +34,7 @@ async function makeRequest(url, body) {
     console.log(res);
     if(res.status.toString().startsWith('4') || res.status.toString().startsWith('5')) {
         const error = await res.text();
+        document.getElementById('welcomeDiv').style.display = "none";
         showToast(error);
         throw Error(error)
     }
@@ -81,11 +82,18 @@ async function fullRegisterFlow(username, password) {
         console.log(y);
         const res = await makeRequest('saveUserSecret', {username, y});
         console.log('Registration Successful');
+        document.getElementById('welcomeDiv').style.display = "none";
+
+
         showToast('Registration Successful');
     } catch (e) {
+        document.getElementById('welcomeDiv').style.display = "none";
+
+
         showToast(e.message);
         // showToast("User already exists or something went wrong");
     }
+    
 
 }
 
@@ -115,7 +123,10 @@ async function  login(username, password) {
     }
     const verdict = await makeRequest('verifyLogin', {username, w});
     console.log(verdict);
+    document.getElementById('welcomeDiv').style.display = "none";
+
     showToast(verdict);
+    
 }
 
 
