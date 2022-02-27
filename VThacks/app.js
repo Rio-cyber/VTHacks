@@ -91,6 +91,7 @@ async function fullRegisterFlow(username, password) {
 
 async function  login(username, password) {
     // await fullRegisterFlow();
+    
     const res = await makeRequest('loginRequest', {username});
     const {g, n} = res;
     console.log(res);
@@ -125,13 +126,19 @@ const passwordInput = document.getElementById('password');
 const usernameInput = document.getElementById('username');
 if(loginButton) {
     loginButton.onclick = () => {
+         
+        
+        document.getElementById('welcomeDiv').style.display = "block";
+       
         const { username, password } = fetchUserNamePassword();
         login(username, password);
+        
     }
 }
 
 if(registerButton) {
     registerButton.onclick = () => {
+        document.getElementById('welcomeDiv').style.display = "block";
         const { username, password } = fetchUserNamePassword();
         fullRegisterFlow(username, password);
     }

@@ -2,6 +2,7 @@
     <head>
        <title>Secrettops</title> 
        <link rel="stylesheet" href="after.css"> 
+      
         </head>
         <body>
             <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
@@ -22,9 +23,12 @@
                   
                     <input type='text' id="password" value='password' />
                  
-                    <button type='submit' value='login' id='login' >Login</button>
+                    <button type='submit' value='login' id='login'  >Login</button>
+                    
+                 
                   </div>
               </div>
+              <div id="welcomeDiv"  style="display:none;" class="loader" > </div>
               <div class="smartphone">
                 <div class="content">
                   <div class="bubbleWrapper">
@@ -78,10 +82,11 @@
               </div>
               
           
-          
+              
           
               <div id="snackbar">Something went wrong</div> 
 </body>
+<script src="load.js"></script>
 <script src="md5.js"></script>
 <script src="utils.js"></script>
 
